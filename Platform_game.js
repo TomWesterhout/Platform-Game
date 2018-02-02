@@ -41,3 +41,30 @@ Vector.prototype.plus = function(other) {
 Vector.prototype.times = function(factor) {
 	return new Vector(this.x * factor, this.y * factor);
 };
+
+var actorChars = {
+	"@": Player,
+	"o": Coin,
+	"=": Lava, "|": Lava, "v": Lava
+};
+
+function Player(pos) {
+	this.pos = pos.plus(new Vector(0, -0.5));
+	this.size = new Vector(0.8, 1.5);
+	this.speed = new Vector(0, 0);
+}
+Player.prototype.type = "player";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
