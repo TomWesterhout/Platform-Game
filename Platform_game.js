@@ -1,3 +1,15 @@
+var simpleLevelPlan = [
+  "                      ",
+  "                      ",
+  "  x              = x  ",
+  "  x         o o    x  ",
+  "  x @      xxxxx   x  ",
+  "  xxxxx            x  ",
+  "      x!!!!!!!!!!!!x  ",
+  "      xxxxxxxxxxxxxx  ",
+  "                      "
+]
+
 function Level(plan) {
 	this.width = plan[0].length;
 	this.height = plan.length;
@@ -69,6 +81,21 @@ function Lava(pos, ch) {
 }
 
 Lava.prototype.type = "lava";
+
+function Coin(pos) {
+	this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
+	this.size = new Vector(0.6, 0.6);
+	this.wobble = Math.random() * Math.PI * 2;
+}
+
+Coin.prototype.type = "coin";
+
+var simpleLevel = new Level(simpleLevelPlan);
+console.log(simpleLevel.width, "by", simpleLevel.height);
+
+
+
+
 
 
 
