@@ -1,0 +1,17 @@
+.background {
+	background-color: #34a6fb;
+	table-layout: fixed;
+	border-spacing: 0;
+}
+
+.background td {
+	padding: 0;
+}
+
+.lava {
+	background-color: #ff6464;
+}
+
+.wall {
+	background-color: #fff;
+}
