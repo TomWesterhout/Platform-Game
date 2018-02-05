@@ -15,3 +15,16 @@
 .wall {
 	background-color: #fff;
 }
+
+.actor {
+	position: absolute;
+}
+
+.coin {
+	background-color: #f1e559;
+}
+
+.player {
+	background-color: #404040;
+}
+
