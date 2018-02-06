@@ -28,3 +28,10 @@
 	background-color: #404040;
 }
 
+.lost .player {
+	background-color: #a04040;
+}
+
+.won .player {
+	box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
