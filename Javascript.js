@@ -38,7 +38,7 @@ function Level(plan) {
 	this.status = this.finishDelay = null;
 }
 
-Level.prototypeisFinished = function() {
+Level.prototype.isFinished = function() {
 	return this.status != null && this.finishDelay < 0;
 };
 
@@ -89,9 +89,6 @@ function Coin(pos) {
 }
 
 Coin.prototype.type = "coin";
-
-var simpleLevel = new Level(simpleLevelPlan);
-console.log(simpleLevel.width, "by", simpleLevel.height);
 
 function elt(name, className) {
 	var elt = document.createElement(name);
@@ -163,6 +160,26 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
 	else if (center.y > bottom - margin)
 		this.wrap.scrollTop = center.y + margin - height;
 };
+
+DOMDisplay.prototype.clear = function() {
+	this.wrap.parentNode.removeChild(this.wrap);
+};
+
+var simpleLevel = new Level(simpleLevelPlan);
+var display = new DOMDisplay(document.body, simpleLevel);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
