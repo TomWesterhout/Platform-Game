@@ -113,7 +113,7 @@ function Player(pos) {
 
 Player.prototype.type = "player";
 
-var player = playerXSpeed = 7;
+var playerXSpeed = 7;
 
 Player.prototype.moveX = function(step, level, keys) {
 	this.speed.x = 0;
@@ -127,6 +127,39 @@ Player.prototype.moveX = function(step, level, keys) {
 		level.playerTouched(obstacle);
 	else
 		this.pos = newPos;
+};
+
+var gravity = 30, jumpSpeed = 17;
+
+Player.prototype.moveY = function(step, level, keys) {
+	this.speed.y += step * gravity;
+	var motion = new Vector(0, this.speed.y * step);
+	var newPos = this.pos.plus(motion);
+	var obstacle = level.obstacleAt(newPos, this.size);
+	if (obstacle)
+		level.playerTouched(obstacle);
+		if (keys.up && this.speed.y > 0)
+			this.speed.y -= jumpSpeed;
+		else
+			this.speed.y = 0;
+	else
+		this.pos = newPos;
+};
+
+Player.prototype.moveY = function(step, level, keys) {
+	this.speed.y += gravity * step;
+	var motion = new Vector(0, this.speed.y * step);
+	var newPos = this.pos.plus(motion);
+	var obstacle = level.obstacleAt(newPos, this.size);
+	if (obstacle) {
+		level.playerTouched(obstacle);
+		if (keys.up && this.speed.y > 0)
+			this.speed.y -= jumpSpeed;
+		else
+			this.speed.y = 0;
+	} else {
+		this.pos = newPos;
+	}
 };
 
 function Lava(pos, ch) {
