@@ -113,6 +113,22 @@ function Player(pos) {
 
 Player.prototype.type = "player";
 
+var player = playerXSpeed = 7;
+
+Player.prototype.moveX = function(step, level, keys) {
+	this.speed.x = 0;
+	if (keys.left) this.speed.x -= playerXSpeed;
+	if (keys.right) this.speed.x += playerXSpeed;
+
+	var motion = new Vector(this.speed.x * step, 0);
+	var newPos = this.pos.plus(motion);
+	var obstacle = level.obstacleAt(newPos, this.size);
+	if (obstacle)
+		level.playerTouched(obstacle);
+	else
+		this.pos = newPos;
+};
+
 function Lava(pos, ch) {
   this.pos = pos;
   this.size = new Vector(1, 1);
