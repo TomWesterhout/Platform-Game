@@ -162,6 +162,20 @@ Player.prototype.moveY = function(step, level, keys) {
 	}
 };
 
+Player.prototype.act = function(step, level, keys) {
+	this.moveX(step, level, keys);
+	this.moveY(step, level, keys);
+
+	var otherActor = level.actorAt(this);
+	if (otherActor)
+		level.playerTouched(otherActor.type, otherActor);
+
+	if (level.status == "lost") {
+		this.size.y -= step;
+		this.pos.y -= step;
+	}
+};
+
 function Lava(pos, ch) {
   this.pos = pos;
   this.size = new Vector(1, 1);
