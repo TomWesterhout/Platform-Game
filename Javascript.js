@@ -338,20 +338,6 @@ function runAnimation(frameFunc) {
 // An object resulting from the trackKeys function which uses the arrowCodes object as an argument.
 var arrows = trackKeys(arrowCodes);
 
-function runLevel(level, Display, andThen) {
-	var display = new Display(document.body, level);
-	runAnimation(function(step) {
-		level.animate(step, arrows);
-		display.drawFrame(step);
-		if (level.isFinished) {
-			display.clear();
-			if (andThen)
-				andThen(level.status);
-			return false;
-		}
-	});
-}
-
 // Creates a Display object which draws a level and calls the runAnimation function with a function as an argument.
 // The function added as an argument to runAnimation animates the level and draws the moveable elements based on the animation.
 // If the level is finished it clears the display, calls the added function if it is given and returns false.
