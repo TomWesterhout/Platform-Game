@@ -10,6 +10,9 @@ var simpleLevelPlan = [
   "                      "
 ]
 
+// A level constructor which sets width and height properties based on the lengths of the given array.
+// It  creates a grid that consists of an array of arrays, containing a fieldtype value for each square.
+// It also creates an actors array, containing moveable elements that are able to interact with each other.
 function Level(plan) {
   this.width = plan[0].length;
   this.height = plan.length;
@@ -332,7 +335,39 @@ function runAnimation(frameFunc) {
 	requestAnimationFrame(frame);
 }
 
+// An object resulting from the trackKeys function which uses the arrowCodes object as an argument.
 var arrows = trackKeys(arrowCodes);
+
+function runLevel(level, Display, andThen) {
+	var display = new Display(document.body, level);
+	runAnimation(function(step) {
+		level.animate(step, arrows);
+		display.drawFrame(step);
+		if (level.isFinished) {
+			display.clear();
+			if (andThen)
+				andThen(level.status);
+			return false;
+		}
+	});
+}
+
+// Creates a Display object which draws a level and calls the runAnimation function with a function as an argument.
+// The function added as an argument to runAnimation animates the level and draws the moveable elements based on the animation.
+// If the level is finished it clears the display, calls the added function if it is given and returns false.
+function runLevel(level, Display, andThen) {
+	var display = new Display(document.body, level);
+	runAnimation(function(step) {
+		level.animate(step, arrows);
+		display.drawFrame(step);
+		if (level.isFinished) {
+			display.clear();
+			if (andThen)
+				andThen(level.status);
+			return false;
+		}
+	});
+}
 
 var simpleLevel = new Level(simpleLevelPlan);
 var display = new DOMDisplay(document.body, simpleLevel);
