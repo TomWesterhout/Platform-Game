@@ -150,21 +150,6 @@ Player.prototype.moveX = function(step, level, keys) {
 var gravity = 30, jumpSpeed = 17;
 
 Player.prototype.moveY = function(step, level, keys) {
-	this.speed.y += step * gravity;
-	var motion = new Vector(0, this.speed.y * step);
-	var newPos = this.pos.plus(motion);
-	var obstacle = level.obstacleAt(newPos, this.size);
-	if (obstacle)
-		level.playerTouched(obstacle);
-		if (keys.up && this.speed.y > 0)
-			this.speed.y -= jumpSpeed;
-		else
-			this.speed.y = 0;
-	else
-		this.pos = newPos;
-};
-
-Player.prototype.moveY = function(step, level, keys) {
 	this.speed.y += gravity * step;
 	var motion = new Vector(0, this.speed.y * step);
 	var newPos = this.pos.plus(motion);
@@ -285,6 +270,7 @@ DOMDisplay.prototype.drawFrame = function() {
   this.scrollPlayerIntoView();
 };
 
+
 DOMDisplay.prototype.scrollPlayerIntoView = function() {
   var width = this.wrap.clientWidth;
   var height = this.wrap.clientHeight;
@@ -310,8 +296,12 @@ DOMDisplay.prototype.clear = function() {
 	this.wrap.parentNode.removeChild(this.wrap);
 };
 
+// Object used by trackKeys function. 
+// The number values represent the Unicode character code of the left, right and up button.
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
 
+
+// The function returns an object via an event handler containing the status of the left, right or up keys being pressed or not.
 function trackKeys(codes) {
 	var pressed = Object.create(null);
 	function handler(event) {
@@ -326,9 +316,26 @@ function trackKeys(codes) {
 	return pressed;
 }
 
+// Converts time to seconds and calls requestAnimationFrame if the outcome of the function given as an argument is true;
+function runAnimation(frameFunc) {
+	var lastTime = null;
+	function frame(time) {
+		var stop = false;
+		if (lastTime != null) {
+			var timeStep = Math.min(time - lastTime, 100) / 1000;
+			stop = frameFunc(timeStep) === false;
+		}
+		lastTime = time;
+		if (!stop)
+			requestAnimationFrame(frame);
+	}
+	requestAnimationFrame(frame);
+}
+
+var arrows = trackKeys(arrowCodes);
+
 var simpleLevel = new Level(simpleLevelPlan);
 var display = new DOMDisplay(document.body, simpleLevel);
-
 
 
 
