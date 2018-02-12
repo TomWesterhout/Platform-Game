@@ -303,36 +303,35 @@ DOMDisplay.prototype.clear = function() {
 // The number values represent the Unicode character code of the left, right and up button.
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
 
-
 // The function returns an object via an event handler containing the status of the left, right or up keys being pressed or not.
 function trackKeys(codes) {
-	var pressed = Object.create(null);
-	function handler(event) {
-		if (codes.hasOwnProperty(event.keyCode)) {
-			var down = event.type == "keydown";
-			pressed[codes[event.keyCode]] = down;
-			event.preventDefault();
-		}
-	}
-	addEventListener("keydown", handler);
-	addEventListener("keyup", handler);
-	return pressed;
+  var pressed = Object.create(null);
+  function handler(event) {
+    if (codes.hasOwnProperty(event.keyCode)) {
+      var down = event.type == "keydown";
+      pressed[codes[event.keyCode]] = down;
+      event.preventDefault();
+    }
+  }
+  addEventListener("keydown", handler);
+  addEventListener("keyup", handler);
+  return pressed;
 }
 
 // Converts time to seconds and calls requestAnimationFrame if the outcome of the function given as an argument is true;
 function runAnimation(frameFunc) {
-	var lastTime = null;
-	function frame(time) {
-		var stop = false;
-		if (lastTime != null) {
-			var timeStep = Math.min(time - lastTime, 100) / 1000;
-			stop = frameFunc(timeStep) === false;
-		}
-		lastTime = time;
-		if (!stop)
-			requestAnimationFrame(frame);
-	}
-	requestAnimationFrame(frame);
+  var lastTime = null;
+  function frame(time) {
+    var stop = false;
+    if (lastTime != null) {
+      var timeStep = Math.min(time - lastTime, 100) / 1000;
+      stop = frameFunc(timeStep) === false;
+    }
+    lastTime = time;
+    if (!stop)
+      requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 }
 
 // An object resulting from the trackKeys function which uses the arrowCodes object as an argument.
@@ -342,17 +341,17 @@ var arrows = trackKeys(arrowCodes);
 // The function added as an argument to runAnimation animates the level and draws the moveable elements based on the animation.
 // If the level is finished it clears the display, calls the added function if it is given and returns false.
 function runLevel(level, Display, andThen) {
-	var display = new Display(document.body, level);
-	runAnimation(function(step) {
-		level.animate(step, arrows);
-		display.drawFrame(step);
-		if (level.isFinished) {
-			display.clear();
-			if (andThen)
-				andThen(level.status);
-			return false;
-		}
-	});
+  var display = new Display(document.body, level);
+  runAnimation(function(step) {
+    level.animate(step, arrows);
+    display.drawFrame(step);
+    if (level.isFinished()) {
+      display.clear();
+      if (andThen)
+        andThen(level.status);
+      return false;
+    }
+  });
 }
 
 // The runGame function defines a function which calls runLevel and provides a level based on the GAME_LEVELS variable.
@@ -360,17 +359,17 @@ function runLevel(level, Display, andThen) {
 // continues to the next level if the level is finished and there are more levels available,
 // or finishes with a winner message when no more levels are available.
 function runGame(plans, Display) {
-	function startLevel(n) {
-		runLevel(new Level(plans[n]), Display, function(status) {
-			if (status == "lost")
-				startLevel(n);
-			else if (n < plans.length - 1)
-				startLevel(n + 1);
-			else
-				console.log("you win!");
-		});
-	}
-	startLevel(0);
+  function startLevel(n) {
+    runLevel(new Level(plans[n]), Display, function(status) {
+      if (status == "lost")
+        startLevel(n);
+      else if (n < plans.length - 1)
+        startLevel(n + 1);
+      else
+        console.log("You win!");
+    });
+  }
+  startLevel(0);
 }
 
 // A variable containing four levels of increasing difficulty, made available by the author of Eloquent Javascript: Marijn Haverbeke.
