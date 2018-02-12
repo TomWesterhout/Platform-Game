@@ -29,10 +29,14 @@ function Level(plan) {
   this.status = this.finishDelay = null;
 }
 
+// Returns true or false based on the status and finishDelay values.
 Level.prototype.isFinished = function() {
   return this.status != null && this.finishDelay < 0;
 };
 
+// Sets up variables which represent the grid element coordinates that are taken up by the position and dimensions of the argumented character element.
+// The method returns either "wall", "lava" if the variables' values meet the provided conditionals.
+// If none of the conditionals are true the method returns the fieldtype, if any.
 Level.prototype.obstacleAt = function(pos, size) {
 	var xStart = Math.floor(pos.x);
 	var xEnd = Math.ceil(pos.x + size.x);
