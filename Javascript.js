@@ -512,7 +512,7 @@ var GAME_LEVELS = [
    "                                                                                                              "]
 ];
 
-rungame(GAME_LEVELS, DOMDisplay);
+runGame(GAME_LEVELS, DOMDisplay);
 
 
 
