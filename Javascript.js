@@ -38,48 +38,48 @@ Level.prototype.isFinished = function() {
 // The method returns either "wall", "lava" if the variables' values meet the provided conditionals.
 // If none of the conditionals are true the method returns the fieldtype, if any.
 Level.prototype.obstacleAt = function(pos, size) {
-	var xStart = Math.floor(pos.x);
-	var xEnd = Math.ceil(pos.x + size.x);
-	var yStart = Math.floor(pos.y);
-	var yEnd = Math.ceil(pos.y + size.y);
+  var xStart = Math.floor(pos.x);
+  var xEnd = Math.ceil(pos.x + size.x);
+  var yStart = Math.floor(pos.y);
+  var yEnd = Math.ceil(pos.y + size.y);
 
-	if (xStart < 0 || xEnd > this.width || yStart < 0)
-		return "wall";
-	if (yEnd > this.height)
-		return "lava";
-	for (var y = yStart; y < yEnd; y++) {
-		for (var x = xStart; x < xEnd; x++) {
-			var fieldType = grid[y][x];
-			if (fieldType) return fieldType;
-		}
-	}
+  if (xStart < 0 || xEnd > this.width || yStart < 0)
+    return "wall";
+  if (yEnd > this.height)
+    return "lava";
+  for (var y = yStart; y < yEnd; y++) {
+    for (var x = xStart; x < xEnd; x++) {
+      var fieldType = this.grid[y][x];
+      if (fieldType) return fieldType;
+    }
+  }
 };
 
 Level.prototype.actorAt = function(actor) {
-	for (var i = 0; i < this.actors.length; i++) {
-		var other = this.actors[i];
-		if (other != actor &&
-				actor.pos.x + actor.size.x > other.pos.x &&
-				actor.pos.x < other.pos.x + other.size.x &&
-				actor.pos.y + actor.size.y > other.pos.y &&
-				actor.pos.y < other.pos.y + other.size.y)
-			return other;
-	}
+  for (var i = 0; i < this.actors.length; i++) {
+    var other = this.actors[i];
+    if (other != actor &&
+        actor.pos.x + actor.size.x > other.pos.x &&
+        actor.pos.x < other.pos.x + other.size.x &&
+        actor.pos.y + actor.size.y > other.pos.y &&
+        actor.pos.y < other.pos.y + other.size.y)
+      return other;
+  }
 };
 
 var maxStep = 0.05;
 
 Level.prototype.animate = function(step, keys) {
-	if (this.status != null)
-		this.finishDelay -= step;
+  if (this.status != null)
+    this.finishDelay -= step;
 
-	while (step > 0) {
-		var thisStep = Math.min(step, maxStep);
-		this.actors.forEach(function(actor) {
-			actor.act(thisStep, this, keys);
-		}, this);
-		step -= thisStep;
-	}
+  while (step > 0) {
+    var thisStep = Math.min(step, maxStep);
+    this.actors.forEach(function(actor) {
+      actor.act(thisStep, this, keys);
+    }, this);
+    step -= thisStep;
+  }
 };
 
 
