@@ -341,7 +341,7 @@ var arrows = trackKeys(arrowCodes);
 // The function added as an argument to runAnimation animates the level and draws the moveable elements based on the animation.
 // If the level is finished it clears the display, calls the added function if it is given and returns false.
 function runLevel(level, Display, andThen) {
-  var display = new Display(document.body, level);
+  var display = new Display(document.getElementById('content'), level);
   runAnimation(function(step) {
     level.animate(step, arrows);
     display.drawFrame(step);
