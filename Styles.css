@@ -36,7 +36,7 @@ time, mark, audio, video {
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		background-color: #126DA8;
+		background-color: #05395B;
 	}
 
 	header {
@@ -45,7 +45,7 @@ time, mark, audio, video {
 		justify-content: center;
 		align-items: center;
 		min-height: 100px;
-		background-color: #126DA8;
+		background-color: #05395B;
 	}
 	
 	h1 {
@@ -67,6 +67,12 @@ time, mark, audio, video {
 
 	.warning {
 		color: #B52625;
+		display: flex;
+
+	}
+
+	.game {
+		display: none;
 	}
 	
 	footer {
@@ -75,7 +81,7 @@ time, mark, audio, video {
 		justify-content: center;
 		align-items: center;
 		min-height: 100px;
-		background-color: #126DA8;
+		background-color: #05395B;
 		border-top-right-radius: 40px;
 	}
 	
